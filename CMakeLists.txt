@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.29.3 FATAL_ERROR)
 
-set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "0e5b6991-d74f-4b3d-a41c-cf096e0b2508")
-
-
 project(evolution VERSION 0.0.1 LANGUAGES CXX)
 
 
@@ -11,8 +8,7 @@ if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
 endif ()
 
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED 23)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_compile_definitions(
   SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
@@ -26,6 +22,7 @@ add_library(${PROJECT_NAME}_main STATIC)
 target_sources(${PROJECT_NAME}_main PUBLIC FILE_SET CXX_MODULES FILES
   src/main.cppm
   src/core/core.map.cppm
+  src/core/core.helpers.field.cppm
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_main)
 
