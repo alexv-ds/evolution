@@ -10,6 +10,8 @@ endif ()
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(EVO_BUILD_TESTING OFF CACHE BOOL "Build tests")
+
 add_compile_definitions(
   SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
 )
@@ -21,8 +23,9 @@ add_executable(${PROJECT_NAME}
 add_library(${PROJECT_NAME}_main STATIC)
 target_sources(${PROJECT_NAME}_main PUBLIC FILE_SET CXX_MODULES FILES
   src/main.cppm
-  src/core/core.map.cppm
+  src/core/core.module.map.cppm
   src/core/core.helpers.field.cppm
+  src/core/core.helpers.xy_iterator.cppm
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_main)
 
@@ -67,3 +70,22 @@ CPMAddPackage(
   "SPDLOG_USE_STD_FORMAT ON"
 )
 target_link_libraries(${PROJECT_NAME}_main PRIVATE spdlog::spdlog)
+
+if (EVO_BUILD_TESTING)
+  CPMAddPackage(
+    NAME Catch2
+    URL "https://github.com/catchorg/Catch2/archive/refs/tags/v3.5.4.tar.gz"
+    URL_HASH "SHA3_256=6908501ace10bca5ece01a972e4834777f3b3cb5e14b391cec015caeb5470eff"
+    OPTIONS
+    "CATCH_INSTALL_DOCS OFF"
+    "CATCH_INSTALL_EXTRAS OFF"
+    "CATCH_ENABLE_REPRODUCIBLE_BUILD OFF"
+  )
+  list(APPEND CMAKE_MODULE_PATH "${Catch2_SOURCE_DIR}/extras")
+
+  include(CTest)
+  include(Catch)
+  enable_testing()
+
+  add_subdirectory(test)
+endif ()
