@@ -4,10 +4,12 @@ module;
 
 export module main;
 import core.helpers.field;
+import core.modules.map;
 
 
 using namespace core::helpers;
 
+using namespace core::modules;
 
 export int cxx_main(int argc, char* argv[]) {
 #ifdef SPDLOG_ACTIVE_LEVEL
@@ -15,8 +17,25 @@ export int cxx_main(int argc, char* argv[]) {
 #endif
   SPDLOG_TRACE("Hello world!");
 
-  FieldLayer<int, unsigned> layer(255, 255);
+  flecs::world world;
+  world.import<Map>();
+  world.set<map::MapSize>({100,100});
+
+  {
+    auto _ = world.scope("world");
+    for (int x = 0; x <= 100; ++x) {
+      for (int y = 0; y <= 100; ++y) {
+        world.entity()
+          .set<map::Position>({x,y});
+      }
+    }
+  }
 
 
-  return 0;
+  return world.app()
+    .target_fps(60)
+    .enable_rest()
+    .enable_monitor()
+    .threads(8)
+    .run();
 }

@@ -14,6 +14,7 @@ set(EVO_BUILD_TESTING OFF CACHE BOOL "Build tests")
 
 add_compile_definitions(
   SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
+  FLECS_CPP_NO_AUTO_REGISTRATION
 )
 
 add_executable(${PROJECT_NAME}
@@ -23,7 +24,7 @@ add_executable(${PROJECT_NAME}
 add_library(${PROJECT_NAME}_main STATIC)
 target_sources(${PROJECT_NAME}_main PUBLIC FILE_SET CXX_MODULES FILES
   src/main.cppm
-  src/core/core.module.map.cppm
+  src/core/core.modules.map.cppm
   src/core/core.helpers.field.cppm
   src/core/core.helpers.xy_iterator.cppm
 )
