@@ -89,14 +89,14 @@ namespace core::modules {
 
       // region Systems
       {
-        auto _ = world.scope("systems");
-        world.entity<SanitizePositionSystem>("SanitizePosition");
-        world.system<Position, MapSize>("SanitizePosition")
-          .kind<_detail::SanitizePositionPhase>()
-          .instanced()
-          .arg(1).self()
-          .arg(2).singleton()
-          .iter(_detail::SanitizePosition);
+//        auto _ = world.scope("systems");
+//        world.entity<SanitizePositionSystem>("SanitizePosition");
+//        world.system<Position, MapSize>("SanitizePosition")
+//          .kind<_detail::SanitizePositionPhase>()
+//          .instanced()
+//          .arg(1).self()
+//          .arg(2).singleton()
+//          .iter(_detail::SanitizePosition);
       }
       // endregion
     }
