@@ -4,6 +4,8 @@ add_executable(evolution
   core/helpers/xy_iterator.hpp
   core/modules/map.hpp
   core/modules/map.cpp
+  init_world.cpp
+  core/helpers/time_measuring.hpp
 )
 
 target_include_directories(evolution PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")

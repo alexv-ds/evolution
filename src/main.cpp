@@ -1,29 +1,25 @@
 #include <spdlog/spdlog.h>
 #include <flecs.h>
+#include <core/helpers/time_measuring.hpp>
 
-#include "core/helpers/field.hpp"
-#include "core/modules/map.hpp"
+using namespace core;
 
-using namespace core::helpers;
-using namespace core::modules;
+void init_world(flecs::world & );
 
-int main(int argc, char* argv[]) {
+int main() {
 #ifdef SPDLOG_ACTIVE_LEVEL
   spdlog::set_level(static_cast<spdlog::level::level_enum>(SPDLOG_ACTIVE_LEVEL));
 #endif
   flecs::world world;
-  world.import<core::modules::Map>();
-  world.set<map::MapSize>({100, 100});
 
   {
-    auto _ = world.scope("world");
-    for (int x = 0; x <= 100; ++x) {
-      for (int y = 0; y <= 100; ++y) {
-        world.entity()
-          .set<map::Position>({x, y});
-      }
-    }
+    const helpers::TimeMeasuring init_measure;
+    init_world(world);
+    const auto duration = init_measure.measure<std::chrono::duration<float>>();
+    SPDLOG_INFO("World initialised - {0:.2f}s", duration.count());
   }
+
+
   SPDLOG_TRACE("World run");
   return world.app()
     .target_fps(60)

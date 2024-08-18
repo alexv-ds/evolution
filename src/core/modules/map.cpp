@@ -49,6 +49,8 @@ namespace core::modules {
       world.component<Position>()
         .member<decltype(Position::x)>("x")
         .member<decltype(Position::y)>("y");
+
+      world.component<Layer>();
     }
 
     // private components
