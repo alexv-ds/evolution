@@ -1,7 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <vector>
 #include <algorithm>
-import core.helpers.xy_iterator;
+#include <core/helpers/xy_iterator.hpp>
 
 using namespace core::helpers;
 

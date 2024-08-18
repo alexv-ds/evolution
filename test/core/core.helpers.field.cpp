@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
-import core.helpers.field;
+#include <core/helpers/field.hpp>
 
 using namespace core::helpers;
 

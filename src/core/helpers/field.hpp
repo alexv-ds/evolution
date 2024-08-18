@@ -1,12 +1,10 @@
-module;
+#pragma once
 
 #include <vector>
 #include <concepts>
 #include <span>
 #include <stdexcept>
 #include <limits>
-
-export module core.helpers.field;
 
 namespace core::helpers {
 
@@ -17,7 +15,7 @@ namespace core::helpers {
    * @tparam ObjectT object type stored in cells
    * @tparam CoordT coordinate number type
    */
-  export template<class ObjectT, std::unsigned_integral CoordT>
+  template<class ObjectT, std::unsigned_integral CoordT>
   class FieldLayer {
   public:
     struct XY {

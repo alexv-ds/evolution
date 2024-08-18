@@ -1,9 +1,7 @@
-module;
 #include <concepts>
 #include <iterator>
-export module core.helpers.xy_iterator;
 
-export namespace core::helpers {
+namespace core::helpers {
 
   template<std::signed_integral T>
   struct xy {
