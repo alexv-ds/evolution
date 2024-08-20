@@ -107,7 +107,7 @@ namespace core::helpers {
 
   template<class ObjectT, std::unsigned_integral CoordT>
   FieldLayer<ObjectT, CoordT>::FieldLayer(FieldLayer&& other) noexcept
-    : field(std::move(other.field)), size_x(other.size_x), size_y(other.size_y) {
+    : size_x(other.size_x), size_y(other.size_y), field(std::move(other.field)) {
     other.size_x = 0;
     other.size_y = 0;
   }
