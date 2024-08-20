@@ -11,6 +11,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(EVO_BUILD_TESTING OFF CACHE BOOL "Build tests")
 
+set(EVO_DEFAULT_TARGET_FLAGS
+  -march=native
+  -Wall
+  -Wextra
+  -pedantic
+)
+
 add_compile_definitions(
   SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
   FLECS_CPP_NO_AUTO_REGISTRATION

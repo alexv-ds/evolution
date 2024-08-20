@@ -11,9 +11,10 @@ void init_world(flecs::world& world) {
   auto _ = world.scope("world");
 
   const map::MapSize map_size = {
-    .x = 100,
-    .y = 100
+    .x = 10000,
+    .y = 1000
   };
+  world.set(map_size);
 
 //  world.entity().in
 

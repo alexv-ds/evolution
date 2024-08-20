@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <type_traits>
 #include <flecs.h>
-#include <core/helpers/field.hpp>
+#include "../helpers/field.hpp"
 
 namespace core::modules {
 
