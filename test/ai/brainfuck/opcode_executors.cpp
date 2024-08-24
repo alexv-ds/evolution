@@ -1,5 +1,5 @@
-#include <string_view>
-#include <array>
+#include <string>
+#include <vector>
 #include <catch2/catch_test_macros.hpp>
 #include <ai/brainfuck/opcode_executors.hpp>
 
@@ -339,8 +339,8 @@ SCENARIO("Brainfuck executor - read returns current cell index") {
 SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
 
   GIVEN("Context: cells - {1}, program '[...]...' , program counter - 0, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {1};
-    const std::string_view program = "[...]...";
+    std::vector<std::uint8_t> cells = {1};
+    const std::string program = "[...]...";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -366,8 +366,8 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {0}, program '[...]...' , program counter - 0, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "[...]...";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "[...]...";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -393,8 +393,8 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {0}, program '[...]' , program counter - 0, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "[...]";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "[...]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -420,8 +420,8 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {0}, program '[...' , program counter - 0, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "[...";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "[...";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -447,8 +447,8 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {0}, program '...' , program counter - 0, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "...";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "...";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -474,8 +474,8 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {0}, program '[.[..].]' , program counter - 0, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "[.[..].]";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "[.[..].]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -501,8 +501,8 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {0}, program '[.[..].]' , program counter - 2, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "[.[..].]";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "[.[..].]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -530,8 +530,8 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
 
 SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   GIVEN("Context: cells - {0}, program '[...]...' , program counter - 4, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "[...]...";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "[...]...";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -558,8 +558,8 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {0}, program '[...]' , program counter - 4, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {0};
-    const std::string_view program = "[...]";
+    std::vector<std::uint8_t> cells = {0};
+    const std::string program = "[...]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -586,8 +586,8 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {1}, program '[...]...' , program counter - 4, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {1};
-    const std::string_view program = "[...]...";
+    std::vector<std::uint8_t> cells = {1};
+    const std::string program = "[...]...";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -614,8 +614,8 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {1}, program '[.[.].]' , program counter - 6, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {1};
-    const std::string_view program = "[.[.].]";
+    std::vector<std::uint8_t> cells = {1};
+    const std::string program = "[.[.].]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -642,8 +642,8 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {1}, program '[.[.].]' , program counter - 4, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {1};
-    const std::string_view program = "[.[.].]";
+    std::vector<std::uint8_t> cells = {1};
+    const std::string program = "[.[.].]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -670,8 +670,8 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {1}, program '..[.].]' , program counter - 4, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {1};
-    const std::string_view program = "..[.].]";
+    std::vector<std::uint8_t> cells = {1};
+    const std::string program = "..[.].]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -698,8 +698,8 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {1}, program '..[.].]' , program counter - 6, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {1};
-    const std::string_view program = "..[.].]";
+    std::vector<std::uint8_t> cells = {1};
+    const std::string program = "..[.].]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
@@ -726,8 +726,8 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
   }
 
   GIVEN("Context: cells - {1}, program '......]' , program counter - 6, cells counter - 0") {
-    std::array<std::uint8_t, 1> cells = {1};
-    const std::string_view program = "......]";
+    std::vector<std::uint8_t> cells = {1};
+    const std::string program = "......]";
     Context context{
       .cells = {cells.data(), cells.size()},
       .program = {reinterpret_cast<const OpCode*>(program.data()), program.size()},
