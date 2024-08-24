@@ -24,6 +24,16 @@ namespace ai::brainfuck {
     }
   }
 
+  inline static void fix_counters(Context& context) {
+    if (context.program_counter >= context.program.size()) {
+      context.program_counter = 0;
+    }
+
+    if (context.cell_counter >= context.cells.size()) {
+      context.cell_counter = 0;
+    }
+  }
+
   SuspendReason VM::run(std::size_t quota) noexcept {
     while (quota > 0) {
       --quota;
@@ -46,18 +56,22 @@ namespace ai::brainfuck {
           break;
         }
         case OpCode::PUT: {
+          const std::size_t cell_index = executors::put(this->context_);
+          fix_counters(this->context_);
           return {
             .quota = quota,
             .action = PutAction{
-              .cell = &this->context_.cells[executors::put(this->context_)]
+              .cell = &this->context_.cells[cell_index]
             }
           };
         }
         case OpCode::READ: {
+          const std::size_t cell_index = executors::read(this->context_);
+          fix_counters(this->context_);
           return {
             .quota = quota,
             .action = ReadAction{
-              .cell = &this->context_.cells[executors::read(this->context_)]
+              .cell = &this->context_.cells[cell_index]
             }
           };
         }
@@ -75,13 +89,7 @@ namespace ai::brainfuck {
         }
       }
 
-      if (this->context_.program_counter >= this->context_.program.size()) {
-        this->context_.program_counter = 0;
-      }
-
-      if (this->context_.cell_counter >= this->context_.cells.size()) {
-        this->context_.cell_counter = 0;
-      }
+      fix_counters(this->context_);
     }
 
     return {
