@@ -1,42 +1,43 @@
-#include <iostream>
-#include <ai/brainfuck.hpp>
+#include <bit>
 #include <spdlog/spdlog.h>
+#include "Agent.hpp"
 
 
 int main() {
 #ifdef SPDLOG_ACTIVE_LEVEL
   spdlog::set_level(static_cast<spdlog::level::level_enum>(SPDLOG_ACTIVE_LEVEL));
 #endif
-
-  std::string out;
-  out.reserve(200);
-
-  std::vector<std::uint8_t> cells(10, 0);
-  const std::string_view program =
-    ">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+"
-    "++++++..+++.>>>++++++++[<++++>-]<.>>>+++++++++"
-    "+[<+++++++++>-]<---.<<<<.+++.------.--------.>>"
-    "+.>++++++++++.";
-
-  ai::brainfuck::VM vm(
-    {
-      .cells = {cells.data(), cells.size()},
-      .program = {reinterpret_cast<const ai::brainfuck::OpCode*>(program.data()), program.size()},
-      .program_counter = 0,
-      .cell_counter = 0
-    }
-  );
-
-  ai::brainfuck::SuspendReason suspend_reason = {
-    .quota = 490
+  Agent::Memory memory = {
+    .cells = std::vector<std::uint8_t>(10,'\0'),
+    .program = [](){
+      std::vector<ai::brainfuck::OpCode> program;
+      const std::string_view str_program =
+        ">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+"
+        "++++++..+++.>>>++++++++[<++++>-]<.>>>+++++++++"
+        "+[<+++++++++>-]<---.<<<<.+++.------.--------.>>"
+        "+.>++++++++++.";
+      program.reserve(str_program.size());
+      for (const char ch : str_program) {
+        program.push_back(std::bit_cast<ai::brainfuck::OpCode>(ch));
+      }
+      return program;
+    }()
   };
 
-  SPDLOG_INFO("VM start");
-  do {
-    suspend_reason = vm.run(suspend_reason.quota);
-    if (auto* put = std::get_if<ai::brainfuck::PutAction>(&suspend_reason.action); put != nullptr) {
-      out.push_back(static_cast<char>(*put->cell));
+  Agent::Callbacks callbacks = {
+    .put = [](std::uint8_t cell){
+      SPDLOG_INFO("PUT CALLBACK: {}", (char)cell);
+      return true;
+    },
+    .read = [](std::uint8_t&) {
+      SPDLOG_INFO("READ CALLBACK");
+      return true;
     }
-  } while(suspend_reason.quota != 0);
-  SPDLOG_INFO("Execution result: '{}'", out);
+  };
+
+  Agent agent(std::move(callbacks), std::move(memory));
+
+  SPDLOG_INFO("Run agent");
+  const std::size_t quota = agent.run(590);
+  SPDLOG_INFO("Agent stoped. Remaining quota - {}", quota);
 }

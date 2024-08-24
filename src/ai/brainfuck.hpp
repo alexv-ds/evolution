@@ -27,6 +27,10 @@ namespace ai::brainfuck {
 
     SuspendReason run(std::size_t quota) noexcept;
 
+    inline Context context() const noexcept {
+      return this->context_;
+    }
+
   private:
     Context context_;
   };
