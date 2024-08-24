@@ -1,13 +1,12 @@
 #include <string_view>
-#include <array>
+#include <vector>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/benchmark/catch_benchmark.hpp>
 #include <ai/brainfuck.hpp>
 
 SCENARIO("Brainfuck VM - 'Hello World' program") {
   GIVEN("VM with 'Hello World' program") {
-    std::array<std::uint8_t, 10> cells = {};
-    std::fill(cells.begin(), cells.end(), '\0');
+    std::vector<std::uint8_t> cells(10,0);
     const std::string_view program =
       ">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+"
       "++++++..+++.>>>++++++++[<++++>-]<.>>>+++++++++"
@@ -46,8 +45,7 @@ SCENARIO("Brainfuck VM - 'Hello World' program") {
 
 TEST_CASE("VM 'Hello World' benchmark", "[!benchmark]") {
 
-  std::array<std::uint8_t, 10> cells = {};
-  std::fill(cells.begin(), cells.end(), '\0');
+  std::vector<std::uint8_t> cells(10,0);
   const std::string_view program =
     ">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+"
     "++++++..+++.>>>++++++++[<++++>-]<.>>>+++++++++"

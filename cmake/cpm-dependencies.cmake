@@ -47,6 +47,19 @@ CPMAddPackage(
   "BOOST_ENABLE_CMAKE ON"
 )
 
+CPMAddPackage(
+  NAME Boost
+  VERSION 1.86.0.beta1
+  URL "https://github.com/boostorg/boost/releases/download/boost-1.86.0.beta1/boost-1.86.0.beta1-cmake.tar.xz"
+  URL_HASH "SHA3_256=8727798bb5c7efd243e6b23432299cd999bfe8d291c0dd5a52ef4c569bcdecbd"
+  SYSTEM YES
+  EXCLUDE_FROM_ALL YES
+  OPTIONS
+  "BOOST_ENABLE_CMAKE ON"
+)
+
+CPMAddPackage("gh:alexv-ds/cpp-fast-pimpl@2.0.1")
+
 if (EVO_BUILD_TESTING)
   CPMAddPackage(
     NAME Catch2
