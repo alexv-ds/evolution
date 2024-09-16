@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(EVO_BUILD_TESTING OFF CACHE BOOL "Build tests")
 
 set(EVO_DEFAULT_TARGET_FLAGS
-  -march=native
+  #  -march=native
   -Wall
   -Wextra
   -pedantic
@@ -34,3 +34,6 @@ if (EVO_BUILD_TESTING)
   enable_testing()
   add_subdirectory(test)
 endif ()
+
+find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
+set(APPEND CMAKE_CXX_CPPCHECK "/usr/bin/cppcheck --enable=all")
