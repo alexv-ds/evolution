@@ -140,6 +140,11 @@ namespace ai::brainfuck::executors {
       return;
     }
 
+    if (context.program_counter == 0) {
+      ++context.program_counter;
+      return;
+    }
+
     --context.program_counter;
     int bracket_balance = -1;
     while (context.program_counter > 0) {
