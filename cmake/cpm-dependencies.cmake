@@ -1,7 +1,6 @@
 CPMAddPackage(
   NAME flecs
-  URL "https://github.com/SanderMertens/flecs/archive/refs/tags/v4.0.1.tar.gz"
-  URL_HASH "SHA3_256=a03a1a70d2697d1213574d1dae5f9fd4d8841919038e1e415e484e22b76385f9"
+  URL "https://github.com/SanderMertens/flecs/archive/refs/tags/v4.0.2.tar.gz"
   SYSTEM YES
   EXCLUDE_FROM_ALL YES
   OPTIONS
