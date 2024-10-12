@@ -56,6 +56,7 @@ CPMAddPackage(
   OPTIONS
   "BOOST_ENABLE_CMAKE ON"
 )
+add_compile_definitions(BOOST_ASIO_NO_DEPRECATED)
 
 CPMAddPackage("gh:alexv-ds/cpp-fast-pimpl@2.0.1")
 

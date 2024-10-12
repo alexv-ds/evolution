@@ -4,6 +4,13 @@ add_library(evolution-core
   modules/map.hpp
   modules/map.cpp
   helpers/time_measuring.hpp
+  Core.cpp
+  Core.hpp
+  modules/visualization.cpp
+  modules/visualization.hpp
+  modules/io.cpp
+  modules/io.hpp
+  modules/visualization/impl/components.hpp
 )
 
 add_library(evolution::core ALIAS evolution-core)
@@ -11,7 +18,10 @@ add_library(evolution::core ALIAS evolution-core)
 target_link_libraries(evolution-core PUBLIC
   flecs::flecs_static
   spdlog::spdlog
-#  Boost::core
+  sfml-graphics
+  Boost::core
+  Boost::dll
+  Boost::asio
 )
 
 target_compile_options(evolution-core PRIVATE ${EVO_DEFAULT_TARGET_FLAGS})
