@@ -11,6 +11,8 @@ add_library(evolution-core
   modules/io.cpp
   modules/io.hpp
   modules/visualization/impl/components.hpp
+  helpers/init.cpp
+  helpers/init.hpp
 )
 
 add_library(evolution::core ALIAS evolution-core)

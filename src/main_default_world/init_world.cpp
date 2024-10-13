@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 #include "core/modules/map.hpp"
 #include "core/modules/visualization.hpp"
+#include <boost/dll/runtime_symbol_info.hpp>
 
 using namespace core::modules;
 using namespace std::chrono_literals;
@@ -11,12 +12,17 @@ void init_world(flecs::world& world) {
   world.import<Map>();
   world.import<Visualization>();
 
-  world.add<visualization::WindowCreate>();
+  SPDLOG_INFO("Здарова жижа!");
+
+  world.set<visualization::WindowCreate>({
+    .title = "Evolution",
+    .icon = (boost::dll::program_location().parent_path() / "icon.png").string()
+  });
   world.add<visualization::ExitOnWindowClose>();
 
   auto _ = world.scope("world");
 
-  const map::MapSize map_size = {
+  constexpr map::MapSize map_size = {
     .x = 100,
     .y = 100
   };

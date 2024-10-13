@@ -3,18 +3,18 @@
 #include <spdlog/spdlog.h>
 
 #include <core/Core.hpp>
+#include <core/helpers/init.hpp>
 
 using namespace core;
 
 void init_world(flecs::world &);
 
 int main() {
-#ifdef SPDLOG_ACTIVE_LEVEL
-  spdlog::set_level(
-      static_cast<spdlog::level::level_enum>(SPDLOG_ACTIVE_LEVEL));
-#endif
+  helpers::fix_win_console();
+  helpers::init_spdlog();
+  helpers::redirect_flecs_logs_to_spdlog();
 
-  std::shared_ptr core = Core::create();
+  const std::shared_ptr core = Core::create();
 
   {
     const helpers::TimeMeasuring init_measure;

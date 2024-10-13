@@ -3,6 +3,7 @@
 #include "visualization/impl/components.hpp"
 #include <SFML/Graphics.hpp>
 #include <boost/dll/runtime_symbol_info.hpp>
+#include <cmath>
 #include <spdlog/spdlog.h>
 
 namespace core::modules::visualization {
@@ -24,9 +25,41 @@ static void InitWindow(flecs::iter &it) {
     auto window_create = it.field<const WindowCreate>(1);
 
     impl::SfmlWindow sfml_window;
-    sfml_window.window.create(sf::VideoMode(sf::Vector2u(500, 500)),
-                              window_create->title);
-    world.set(sfml_window);
+
+    constexpr sf::Vector2u minimum_size(500, 500);
+    const sf::Vector2u size = [minimum_size]() {
+      const sf::Vector2u desktop_size = sf::VideoMode::getDesktopMode().size;
+      constexpr float size_factor = 0.7;
+      const auto estimated_size =
+          sf::Vector2u(static_cast<unsigned int>(
+                           static_cast<float>(desktop_size.x) * size_factor),
+                       static_cast<unsigned int>(
+                           static_cast<float>(desktop_size.y) * size_factor));
+
+      const sf::Vector2u real_size(std::max(estimated_size.x, minimum_size.x),
+                                   std::max(estimated_size.y, minimum_size.y));
+      return real_size;
+    }();
+
+    sfml_window.window.create(sf::VideoMode(size), window_create->title);
+
+    if (!window_create->icon.empty()) {
+      if (boost::filesystem::exists(window_create->icon)) {
+        sf::Image icon;
+        if (icon.loadFromFile(window_create->icon)) {
+          sfml_window.window.setIcon(icon);
+        } else {
+          SPDLOG_ERROR("Icon could not be loaded");
+        }
+      } else {
+        SPDLOG_ERROR("Cannot set window icon: file not exists - {}",
+                     window_create->icon);
+      }
+    }
+
+    sfml_window.window.setMinimumSize(minimum_size);
+
+    world.set(std::move(sfml_window));
     world.add<Window>();
     world.remove<impl::SfmlWindowInit>();
     world.remove<WindowCreate>();
