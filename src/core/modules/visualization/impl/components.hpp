@@ -7,6 +7,7 @@ struct SfmlWindowInit {};
 
 struct SfmlWindow {
   sf::RenderWindow window;
+
 };
 
 }

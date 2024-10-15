@@ -1,7 +1,7 @@
 add_executable(evolution
   main.cpp
   init_world.cpp
-  $<$<BOOL:${WIN32}>:icon.rc>
+#  $<$<BOOL:${WIN32}>:icon.rc>
 )
 target_compile_options(evolution PRIVATE ${EVO_DEFAULT_TARGET_FLAGS})
 

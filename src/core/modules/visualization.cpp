@@ -18,6 +18,7 @@ static void OnRemoveWindow(const flecs::entity &e, const Window &) {
   e.world().remove<WindowCreate>();
 }
 
+
 static void InitWindow(flecs::iter &it) {
   while (it.next()) {
     const flecs::world world = it.world();
@@ -87,6 +88,7 @@ static void WindowClear(flecs::iter &it) {
     sfml_window->window.clear(sf::Color(35, 36, 35));
   }
 }
+
 static void WindowDisplay(flecs::iter &it) {
   while (it.next()) {
     const auto sfml_window = it.field<impl::SfmlWindow>(0);
@@ -101,7 +103,6 @@ static void ExitIfWindowClosed(flecs::iter &it) {
   }
 }
 
-// static void
 
 // ///////////////////////////
 // ///////////////////////////

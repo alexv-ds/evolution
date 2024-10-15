@@ -15,12 +15,12 @@ void init_world(flecs::world& world) {
   SPDLOG_INFO("Здарова жижа!");
 
   world.set<visualization::WindowCreate>({
-    .title = "Evolution",
-    .icon = (boost::dll::program_location().parent_path() / "icon.png").string()
+    .title = "Evolution"
   });
   world.add<visualization::ExitOnWindowClose>();
 
   auto _ = world.scope("world");
+  // world.remove_all()
 
   constexpr map::MapSize map_size = {
     .x = 100,
