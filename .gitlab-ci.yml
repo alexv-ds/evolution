@@ -10,18 +10,16 @@ linux:build-containers:
     matrix:
       - IMAGE: [gcc-14, clang-19, clang-20]
   rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-      when: never
     - when: on_success
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
     - |
       docker build . -f cicd/$IMAGE.Dockerfile --push \
-        -t $CI_REGISTRY_IMAGE/build-container/$IMAGE:$CI_COMMIT_BRANCH
+        -t $CI_REGISTRY_IMAGE/build-container/$IMAGE:$CI_COMMIT_REF_SLUG
 
 linux:build-and-test:
   stage: build
-  image: $CI_REGISTRY_IMAGE/build-container/$CONTAINER:$CI_COMMIT_BRANCH
+  image: $CI_REGISTRY_IMAGE/build-container/$CONTAINER:$CI_COMMIT_REF_SLUG
   parallel:
     matrix:
       - CONTAINER: gcc-14
