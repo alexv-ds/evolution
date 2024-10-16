@@ -40,7 +40,9 @@ linux:build-and-test:
   rules:
     - when: on_success
   cache:
-    - key: cache-cpm-$CI_COMMIT_REF_SLUG$CI_MERGE_REQUEST_IID
+    - key:
+        files:
+          - cmake/cpm-dependencies.cmake
       paths:
         - cache/cpm
     - key: cache-ccache-$CMAKE_BUILD_TYPE-$CONTAINER-$CI_COMMIT_REF_SLUG$CI_MERGE_REQUEST_IID
