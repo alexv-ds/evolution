@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <random>
+#include <array>
 #include <ai/brainfuck.hpp>
 
 class GeneManager {
@@ -43,7 +44,7 @@ private:
   std::mt19937 random_generator;
 
   std::uniform_int_distribution<int> dist_full_or_real_opcode;
-  std::uniform_int_distribution<std::uint8_t> dist_full_random_opcode;
+  std::uniform_int_distribution<std::uint32_t> dist_full_random_opcode;
   std::uniform_int_distribution<std::size_t> dist_real_opcode;
   std::array<ai::brainfuck::OpCode, 8> real_opcodes = {
     ai::brainfuck::OpCode::NEXT_CELL,
