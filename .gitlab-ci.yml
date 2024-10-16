@@ -39,6 +39,8 @@ linux:build-and-test:
         CC: clang-20
         CXX: clang++-20
         CLANG_LIBCPP: ["true", "false"]
+  rules:
+    - when: on_success
   cache:
     - key: cache-cpm-$CI_COMMIT_REF_SLUG
       paths:
