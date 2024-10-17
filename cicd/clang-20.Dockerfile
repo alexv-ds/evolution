@@ -10,9 +10,9 @@ RUN \
   echo "deb-src http://apt.llvm.org/noble/ llvm-toolchain-noble main" >> /etc/apt/sources.list && \
   apt-get update && \
   apt-get install --no-install-recommends -y \
-    clang-20=1:20~++20241016081625+4ddea298e60c-1~exp1~20241016081756.479 \
-    clang-tools-20=1:20~++20241016081625+4ddea298e60c-1~exp1~20241016081756.479 \
-    libc++-20-dev=1:20~++20241016081625+4ddea298e60c-1~exp1~20241016081756.479 \
+    clang-20=* \
+    clang-tools-20=* \
+    libc++-20-dev=* \
     cmake=3.30.* \
     ninja-build=1.12.* \
     git=1:2.45.* \
