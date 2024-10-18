@@ -1,0 +1,73 @@
+stages:
+  - containers
+  - build
+
+linux:build-containers:
+  stage: containers
+  tags:
+    - "alpine-dind"
+  parallel:
+    matrix:
+      - IMAGE: [gcc-14, clang-19, clang-20]
+  rules:
+    - when: on_success
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - |
+      docker build . -f cicd/$IMAGE.Dockerfile --push \
+        -t $CI_REGISTRY_IMAGE/build-container/$IMAGE:$CI_COMMIT_REF_SLUG$CI_MERGE_REQUEST_IID
+
+linux:build-and-test:
+  stage: build
+  image: $CI_REGISTRY_IMAGE/build-container/$CONTAINER:$CI_COMMIT_REF_SLUG$CI_MERGE_REQUEST_IID
+  parallel:
+    matrix:
+      - CONTAINER: gcc-14
+        CMAKE_BUILD_TYPE: [Release, Debug]
+        CC: gcc-14
+        CXX: g++-14
+        CLANG_LIBCPP: "false"
+      - CONTAINER: clang-19
+        CMAKE_BUILD_TYPE: [ Release, Debug ]
+        CC: clang-19
+        CXX: clang++-19
+        CLANG_LIBCPP: ["true", "false"]
+      - CONTAINER: clang-20
+        CMAKE_BUILD_TYPE: [ Release, Debug ]
+        CC: clang-20
+        CXX: clang++-20
+        CLANG_LIBCPP: ["true", "false"]
+  rules:
+    - when: on_success
+  cache:
+    - key:
+        files:
+          - cmake/cpm-dependencies.cmake
+      paths:
+        - cache/cpm
+    - key: cache-ccache-$CMAKE_BUILD_TYPE-$CONTAINER-$CI_COMMIT_REF_SLUG$CI_MERGE_REQUEST_IID
+      paths:
+        - cache/ccache
+
+  variables:
+    CPM_SOURCE_CACHE: $CI_PROJECT_DIR/cache/cpm
+    CCACHE_DIR: $CI_PROJECT_DIR/cache/ccache
+    CMAKE_CXX_COMPILER_LAUNCHER: ccache
+    CMAKE_C_COMPILER_LAUNCHER: ccache
+  script:
+    - mkdir -p cache
+    - |
+      if [ "$CLANG_LIBCPP" = "true" ]
+      then
+        export CXXFLAGS="-stdlib=libc++"
+        export CMAKE_EXE_LINKER_FLAGS_INIT="-stdlib=libc++ -lc++abi"
+      fi
+    - cmake -B build -G Ninja -DEVO_BUILD_TESTING=ON
+    - cmake --build build --parallel
+    - ctest --test-dir build --output-on-failure --output-junit rspec.xml
+  artifacts:
+    when: always
+    paths:
+      - build/rspec.xml
+    reports:
+      junit: build/rspec.xml

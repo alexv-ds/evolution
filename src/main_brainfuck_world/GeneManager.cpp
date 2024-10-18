@@ -41,7 +41,8 @@ ai::brainfuck::OpCode GeneManager::generate_opcode() {
   if (this->dist_full_or_real_opcode(this->random_generator) < 30) {
     opcode = this->real_opcodes[this->dist_real_opcode(this->random_generator)];
   } else {
-    opcode = std::bit_cast<decltype(opcode)>(this->dist_full_random_opcode(this->random_generator));
+    opcode = std::bit_cast<decltype(opcode)>(static_cast<std::uint8_t>(
+        this->dist_full_random_opcode(this->random_generator)));
   }
 
   return opcode;

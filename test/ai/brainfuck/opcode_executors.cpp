@@ -268,15 +268,15 @@ SCENARIO("Brainfuck executor - put returns current cell index") {
 
       THEN("cells == {1,2,3,4}") {
         REQUIRE(context.cells.size() == 4);
-        REQUIRE(context.cells.at(0) == 1);
-        REQUIRE(context.cells.at(1) == 2);
-        REQUIRE(context.cells.at(2) == 3);
-        REQUIRE(context.cells.at(3) == 4);
+        REQUIRE(context.cells[0] == 1);
+        REQUIRE(context.cells[1] == 2);
+        REQUIRE(context.cells[2] == 3);
+        REQUIRE(context.cells[3] == 4);
       }
 
       THEN("program == '.'") {
         REQUIRE(context.program.size() == 1);
-        REQUIRE(context.program.at(0) == OpCode::PUT);
+        REQUIRE(context.program[0] == OpCode::PUT);
       }
 
       THEN("program counter == 1") {
@@ -310,15 +310,15 @@ SCENARIO("Brainfuck executor - read returns current cell index") {
 
       THEN("cells == {1,2,3,4}") {
         REQUIRE(context.cells.size() == 4);
-        REQUIRE(context.cells.at(0) == 1);
-        REQUIRE(context.cells.at(1) == 2);
-        REQUIRE(context.cells.at(2) == 3);
-        REQUIRE(context.cells.at(3) == 4);
+        REQUIRE(context.cells[0] == 1);
+        REQUIRE(context.cells[1] == 2);
+        REQUIRE(context.cells[2] == 3);
+        REQUIRE(context.cells[3] == 4);
       }
 
       THEN("program == ','") {
         REQUIRE(context.program.size() == 1);
-        REQUIRE(context.program.at(0) == OpCode::READ);
+        REQUIRE(context.program[0] == OpCode::READ);
       }
 
       THEN("program counter == 1") {
@@ -352,7 +352,7 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
       executors::bracket_open(context);
 
       THEN("cells == {1}") {
-        REQUIRE(context.cells.at(0) == 1);
+        REQUIRE(context.cells[0] == 1);
       }
 
       THEN("cell counter == 0") {
@@ -379,7 +379,7 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
       executors::bracket_open(context);
 
       THEN("cells == {0}") {
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -406,7 +406,7 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
       executors::bracket_open(context);
 
       THEN("cells == {0}") {
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -433,7 +433,7 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
       executors::bracket_open(context);
 
       THEN("cells == {0}") {
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -460,7 +460,7 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
       executors::bracket_open(context);
 
       THEN("cells == {0}") {
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -487,7 +487,7 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
       executors::bracket_open(context);
 
       THEN("cells == {0}") {
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -514,7 +514,7 @@ SCENARIO("Brainfuck executor - bracket_open correctly moves program counter") {
       executors::bracket_open(context);
 
       THEN("cells == {0}") {
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -544,7 +544,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -572,7 +572,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 0);
+        REQUIRE(context.cells[0] == 0);
       }
 
       THEN("cell counter == 0") {
@@ -600,7 +600,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 1);
+        REQUIRE(context.cells[0] == 1);
       }
 
       THEN("cell counter == 0") {
@@ -628,7 +628,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 1);
+        REQUIRE(context.cells[0] == 1);
       }
 
       THEN("cell counter == 0") {
@@ -656,7 +656,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 1);
+        REQUIRE(context.cells[0] == 1);
       }
 
       THEN("cell counter == 0") {
@@ -684,7 +684,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 1);
+        REQUIRE(context.cells[0] == 1);
       }
 
       THEN("cell counter == 0") {
@@ -712,7 +712,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 1);
+        REQUIRE(context.cells[0] == 1);
       }
 
       THEN("cell counter == 0") {
@@ -740,7 +740,7 @@ SCENARIO("Brainfuck executor - bracket_clone correctly moves program counter") {
 
       THEN("cells == {0}") {
         REQUIRE(context.cells.size() == 1);
-        REQUIRE(context.cells.at(0) == 1);
+        REQUIRE(context.cells[0] == 1);
       }
 
       THEN("cell counter == 0") {
